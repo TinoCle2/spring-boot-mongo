@@ -26,26 +26,26 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/{id}", method= RequestMethod.GET)
-	public Customer getCustomerById(@PathVariable("id") ObjectId id) {
+	public Customer getCustomerById(@PathVariable("id") String id) {
 		return repository.findBy_id(id);
 	}
 	
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void modifyCustomerById(@PathVariable("id") ObjectId id, @Valid @RequestBody Customer customer) {
+	public void modifyCustomerById(@PathVariable("id") String id, @Valid @RequestBody Customer customer) {
 	  customer.set_id(id);
 	  repository.save(customer);
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public Customer createCustomer(@Valid @RequestBody Customer customer) {
-	  customer.set_id(ObjectId.get());
+	  customer.set_id(ObjectId.get().toHexString());
 	  repository.save(customer);
 	  return customer;
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void deleteCustomer(@PathVariable ObjectId id) {
+	public void deleteCustomer(@PathVariable String id) {
 	  repository.delete(repository.findBy_id(id));
 	}
 }
